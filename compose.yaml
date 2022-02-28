@@ -1,0 +1,26 @@
+# this compose file uses the latest compose specifiaction. Also Docker Compose V2 is advised to be installed: https://docs.docker.com/compose/cli-command/#install-on-linux
+
+services:
+  my-website:
+    image: wordpress
+    restart: unless-stopped
+    network_mode: service:husarnet-sidecar
+    volumes:
+      - /var/www/html
+
+  husarnet-sidecar:
+    build:
+      context: .
+      dockerfile: husarnet.Dockerfile
+    restart: always
+    volumes:
+      - /var/lib/husarnet
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - HOSTNAME=${HUSARNET_HOSTNAME}
+      - JOINCODE=${HUSARNET_JOINCODE}
