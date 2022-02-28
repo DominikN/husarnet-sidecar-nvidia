@@ -1,4 +1,5 @@
 # husarnet-sidecar-nvidia
+
 Husarnet Sidecar but with a workaround for issues with ip6tables (eg. Nvidia Jetson)
 
 > **Prerequisites** 
@@ -31,3 +32,7 @@ docker compose up
 In your laptop sitting in the same Husarnet network, open a demo Wordpress site running in Docker with Husarnet Sidecar namespace provided:
 
 http://husarnet-container:80
+
+## Summary
+
+If you face any issues with IPtables and see errors like `ip6tables v1.8.7 (nf_tables): Could not fetch rule set generation id: Invalid argument`, just copy `husarnet.Dockerfile` and `husarnet-docker.sh` files to your project, and start Husarnet Sidecar the same way as shown in `compose.yaml` file instead of pulling the default one from a Dockerhub.
